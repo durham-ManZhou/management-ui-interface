@@ -1,1 +1,424 @@
-import{n as e}from"./analysisDemo-DiaidRaO.js";var t=`admin-demo-db-v2`,n=`analysis-demo-v2`,r=(e,t=10)=>{let n=new Date;return n.setDate(n.getDate()+e),n.setHours(t,0,0,0),n.toISOString()},i=e=>r(e).slice(0,10),a=()=>Math.random().toString(36).slice(2,10);function o(){let e=(e,t,n,i)=>({id:e,name:t,phone:n,education:`高三`,budget:`30-50万`,country:`英国`,project:`英国2+2`,source:`小程序`,owner:``,level:`C`,status:`待跟进`,tags:[],created_at:r(-1),...i});return{leads:[e(`l1`,`王子涵家长`,`13856001234`,{wechat:`wzh_2026`,created_at:r(0,9),level:`A`,tags:[`高意向`,`关注奖学金`]}),e(`l2`,`李明轩`,`13955102233`,{created_at:r(0,8),country:`澳洲`,project:`澳洲3+1`,source:`开放日`}),e(`l3`,`陈思雨家长`,`18756003344`,{wechat:`chensiyu_mom`,owner:`张老师`,level:`A`,status:`跟进中`,next_follow_at:i(-2),last_contact_at:i(-6),tags:[`家长决策`],booked:!0}),e(`l4`,`赵一鸣`,`15256104455`,{owner:`张老师`,level:`B`,status:`跟进中`,next_follow_at:i(0),last_contact_at:i(-3),country:`香港`,project:`香港硕士`,education:`本科大三`}),e(`l5`,`孙佳怡`,`13685105566`,{owner:`刘老师`,level:`B`,status:`跟进中`,next_follow_at:i(2),last_contact_at:i(-1),tags:[`价格敏感`]}),e(`l6`,`周浩然家长`,`13956106677`,{owner:`刘老师`,level:`A`,status:`已报名`,booked:!0,visited:!0,enrolled:!0,last_contact_at:i(-4)}),e(`l7`,`吴雨桐`,`18256107788`,{owner:`张老师`,level:`C`,status:`无效`,tags:[`空号`]}),e(`l8`,`郑凯文`,`13856001234`,{created_at:r(-3),source:`公众号`}),e(`l9`,`黄心怡家长`,`17756108899`,{owner:`刘老师`,level:`A`,status:`跟进中`,next_follow_at:i(-1),last_contact_at:i(-8),booked:!0,visited:!0,country:`新加坡`,project:`新加坡直博`}),e(`l10`,`林子墨`,`15056109900`,{created_at:r(-2),source:`朋友推荐`,level:`B`})],lead_notes:[{id:`n1`,lead_id:`l3`,author:`张老师`,note:`电话沟通，家长关心住宿和安全，约了周六到校。`,created_at:r(-6)},{id:`n2`,lead_id:`l4`,author:`张老师`,note:`微信发送了香港硕士项目介绍。`,created_at:r(-3)},{id:`n3`,lead_id:`l9`,author:`刘老师`,note:`已到访，对新加坡项目很感兴趣，等家长商量。`,created_at:r(-8)}],bookings:[{id:`b1`,name:`陈思雨家长`,phone:`18756003344`,people:2,visit_date:i(3),slot:`上午`,status:`待确认`,created_at:r(-1)},{id:`b3`,name:`赵一鸣`,phone:`15256104455`,people:1,visit_date:i(0),slot:`下午`,status:`已确认`,created_at:r(-2)},{id:`b4`,name:`孙佳怡`,phone:`13685105566`,people:2,visit_date:i(1),slot:`上午`,status:`待确认`,created_at:r(-1)},{id:`b5`,name:`李明轩`,phone:`13955102233`,people:4,visit_date:i(12),slot:`下午`,status:`待确认`,created_at:r(0)},{id:`b2`,name:`黄心怡家长`,phone:`17756108899`,people:3,visit_date:i(-8),slot:`下午`,status:`已到访`,created_at:r(-10)}],events:[{id:`e1`,name:`2026秋季校园开放日`,starts_at:r(4,9),created_at:r(-10)}],event_signups:[],ads:[],images:[],tags:[],projects:[],profiles:[],user_roles:[]}}function s(){let r;try{let e=JSON.parse(localStorage.getItem(t)||`null`);e&&(r=e)}catch{}if(r??=o(),r._settings?.analysisDemoVersion!==n){let t=e();for(let e of[`leads`,`lead_notes`,`bookings`,`traffic`]){let n=new Map(t[e].map(e=>[e.id,e])),i=(r[e]||[]).map(e=>e.is_demo&&n.has(e.id)?{...n.get(e.id),...e,...u(n.get(e.id))}:e),a=new Set(i.map(e=>e.id));r[e]=[...i,...[...n.values()].filter(e=>!a.has(e.id))]}r._settings={...r._settings,analysisDemoVersion:n},d(r)}let i=r.profiles||=[],a=!1;for(let e of c)i.some(t=>t.account===e.account)||(i.push({...e,active:!0,createdAt:new Date().toISOString(),lastLoginAt:``,online:!1}),a=!0);return a&&d(r),r}var c=[{id:`t-super`,account:`admin@aufe.edu.cn`,password:`Admin123`,name:`超级管理员`,role:`super_admin`},{id:`t-zhang`,account:`zhang@aufe.edu.cn`,password:`Test123`,name:`张老师`,role:`advisor`},{id:`t-liu`,account:`liu@aufe.edu.cn`,password:`Test123`,name:`刘老师`,role:`advisor`},{id:`t-wang`,account:`wang@aufe.edu.cn`,password:`Test123`,name:`王老师`,role:`advisor`}],l=[`source`,`campaign`,`country`,`project`,`program`,`education`,`budget`,`entry_year`,`major`,`duration`,`booked`,`booked_at`,`lost_at`];function u(e){return Object.fromEntries(l.filter(t=>t in e).map(t=>[t,e[t]]))}function d(e){localStorage.setItem(t,JSON.stringify(e))}async function f(e,t){let n=s(),r=e=>n[e]||=[];switch(e){case`loginAdmin`:case`registerAdmin`:{let e=r(`profiles`).find(e=>e.account===t.account);if(e){if(e.password&&e.password!==t.password)throw Error(`账号或密码不正确`);return e.online=!0,e.lastLoginAt=new Date().toISOString(),d(n),{account:e.account,name:e.name,token:`demo`,role:e.role||`advisor`}}return{account:t.account||`admin`,name:t.name||`管理员`,token:`demo`,role:`super_admin`}}case`logoutAdmin`:{let e=r(`profiles`).find(e=>e.account===t?.account);e&&(e.online=!1);break}case`listAdmins`:return r(`profiles`).map(({password:e,...t})=>t);case`createAdvisor`:r(`profiles`).push({id:a(),account:t.account,password:t.password,name:t.name,role:`advisor`,active:!0,createdAt:new Date().toISOString(),lastLoginAt:``,online:!1});break;case`adminBundle`:return{...n,school:n._settings?.school||{},system:n._settings?.system||{}};case`adminSaveSetting`:n._settings={...n._settings||{},[t.key]:t.value};break;case`adminSave`:{let{note:e,author:i,...o}=t.values||{},s=r(t.table),c=t.id||a(),l=s.findIndex(e=>e.id===c);return l>=0?s[l]={...s[l],...o}:s.push({id:c,created_at:new Date().toISOString(),...o}),t.table===`leads`&&e&&r(`lead_notes`).unshift({id:a(),lead_id:c,author:i||``,note:e,created_at:new Date().toISOString()}),d(n),{id:c}}case`adminRemove`:n[t.table]=r(t.table).filter(e=>e.id!==t.id);break;case`adminAssignLeads`:r(`leads`).forEach(e=>{t.ids.includes(e.id)&&(e.owner=t.owner,e.status===`待跟进`&&(e.status=`跟进中`))});break;case`adminMergeLeads`:r(`leads`).forEach(e=>{t.dropIds.includes(e.id)&&(e.mergedInto=t.keepId)}),r(`lead_notes`).forEach(e=>{t.dropIds.includes(e.lead_id)&&(e.lead_id=t.keepId)});break;case`saveOpenDay`:{let e=a();return r(`events`).push({id:e,...t,created_at:new Date().toISOString()}),d(n),{id:e}}case`adminKeepUpload`:r(`images`).push({id:a(),url:t.url,created_at:new Date().toISOString()})}return d(n),null}export{f as demoCloud};
+import { n as e } from "./analysisDemo-DiaidRaO.js";
+var t = `admin-demo-db-v2`,
+  n = `analysis-demo-v2`,
+  r = (e, t = 10) => {
+    let n = new Date();
+    return (
+      n.setDate(n.getDate() + e),
+      n.setHours(t, 0, 0, 0),
+      n.toISOString()
+    );
+  },
+  i = (e) => r(e).slice(0, 10),
+  a = () => Math.random().toString(36).slice(2, 10);
+function o() {
+  let e = (e, t, n, i) => ({
+    id: e,
+    name: t,
+    phone: n,
+    education: `高三`,
+    budget: `30-50万`,
+    country: `英国`,
+    project: `英国2+2`,
+    source: `小程序`,
+    owner: ``,
+    level: `C`,
+    status: `待跟进`,
+    tags: [],
+    created_at: r(-1),
+    ...i,
+  });
+  return {
+    leads: [
+      e(`l1`, `王子涵家长`, `13856001234`, {
+        wechat: `wzh_2026`,
+        created_at: r(0, 9),
+        level: `A`,
+        tags: [`高意向`, `关注奖学金`],
+      }),
+      e(`l2`, `李明轩`, `13955102233`, {
+        created_at: r(0, 8),
+        country: `澳洲`,
+        project: `澳洲3+1`,
+        source: `开放日`,
+      }),
+      e(`l3`, `陈思雨家长`, `18756003344`, {
+        wechat: `chensiyu_mom`,
+        owner: `张老师`,
+        level: `A`,
+        status: `跟进中`,
+        next_follow_at: i(-2),
+        last_contact_at: i(-6),
+        tags: [`家长决策`],
+        booked: !0,
+      }),
+      e(`l4`, `赵一鸣`, `15256104455`, {
+        owner: `张老师`,
+        level: `B`,
+        status: `跟进中`,
+        next_follow_at: i(0),
+        last_contact_at: i(-3),
+        country: `香港`,
+        project: `香港硕士`,
+        education: `本科大三`,
+      }),
+      e(`l5`, `孙佳怡`, `13685105566`, {
+        owner: `刘老师`,
+        level: `B`,
+        status: `跟进中`,
+        next_follow_at: i(2),
+        last_contact_at: i(-1),
+        tags: [`价格敏感`],
+      }),
+      e(`l6`, `周浩然家长`, `13956106677`, {
+        owner: `刘老师`,
+        level: `A`,
+        status: `已报名`,
+        booked: !0,
+        visited: !0,
+        enrolled: !0,
+        last_contact_at: i(-4),
+      }),
+      e(`l7`, `吴雨桐`, `18256107788`, {
+        owner: `张老师`,
+        level: `C`,
+        status: `无效`,
+        tags: [`空号`],
+      }),
+      e(`l8`, `郑凯文`, `13856001234`, { created_at: r(-3), source: `公众号` }),
+      e(`l9`, `黄心怡家长`, `17756108899`, {
+        owner: `刘老师`,
+        level: `A`,
+        status: `跟进中`,
+        next_follow_at: i(-1),
+        last_contact_at: i(-8),
+        booked: !0,
+        visited: !0,
+        country: `新加坡`,
+        project: `新加坡直博`,
+      }),
+      e(`l10`, `林子墨`, `15056109900`, {
+        created_at: r(-2),
+        source: `朋友推荐`,
+        level: `B`,
+      }),
+    ],
+    lead_notes: [
+      {
+        id: `n1`,
+        lead_id: `l3`,
+        author: `张老师`,
+        note: `电话沟通，家长关心住宿和安全，约了周六到校。`,
+        created_at: r(-6),
+      },
+      {
+        id: `n2`,
+        lead_id: `l4`,
+        author: `张老师`,
+        note: `微信发送了香港硕士项目介绍。`,
+        created_at: r(-3),
+      },
+      {
+        id: `n3`,
+        lead_id: `l9`,
+        author: `刘老师`,
+        note: `已到访，对新加坡项目很感兴趣，等家长商量。`,
+        created_at: r(-8),
+      },
+    ],
+    bookings: [
+      {
+        id: `b1`,
+        name: `陈思雨家长`,
+        phone: `18756003344`,
+        people: 2,
+        visit_date: i(3),
+        slot: `上午`,
+        status: `待确认`,
+        created_at: r(-1),
+      },
+      {
+        id: `b3`,
+        name: `赵一鸣`,
+        phone: `15256104455`,
+        people: 1,
+        visit_date: i(0),
+        slot: `下午`,
+        status: `已确认`,
+        created_at: r(-2),
+      },
+      {
+        id: `b4`,
+        name: `孙佳怡`,
+        phone: `13685105566`,
+        people: 2,
+        visit_date: i(1),
+        slot: `上午`,
+        status: `待确认`,
+        created_at: r(-1),
+      },
+      {
+        id: `b5`,
+        name: `李明轩`,
+        phone: `13955102233`,
+        people: 4,
+        visit_date: i(12),
+        slot: `下午`,
+        status: `待确认`,
+        created_at: r(0),
+      },
+      {
+        id: `b2`,
+        name: `黄心怡家长`,
+        phone: `17756108899`,
+        people: 3,
+        visit_date: i(-8),
+        slot: `下午`,
+        status: `已到访`,
+        created_at: r(-10),
+      },
+    ],
+    events: [
+      {
+        id: `e1`,
+        name: `2026秋季校园开放日`,
+        starts_at: r(4, 9),
+        created_at: r(-10),
+      },
+    ],
+    event_signups: [],
+    ads: [],
+    images: [],
+    tags: [],
+    projects: [],
+    profiles: [],
+    user_roles: [],
+  };
+}
+function s() {
+  let r;
+  try {
+    let e = JSON.parse(localStorage.getItem(t) || `null`);
+    e && (r = e);
+  } catch {}
+  if (((r ??= o()), r._settings?.analysisDemoVersion !== n)) {
+    let t = e();
+    for (let e of [`leads`, `lead_notes`, `bookings`, `traffic`]) {
+      let n = new Map(t[e].map((e) => [e.id, e])),
+        i = (r[e] || []).map((e) =>
+          e.is_demo && n.has(e.id)
+            ? { ...n.get(e.id), ...e, ...u(n.get(e.id)) }
+            : e,
+        ),
+        a = new Set(i.map((e) => e.id));
+      r[e] = [...i, ...[...n.values()].filter((e) => !a.has(e.id))];
+    }
+    ((r._settings = { ...r._settings, analysisDemoVersion: n }), d(r));
+  }
+  let i = (r.profiles ||= []),
+    a = !1;
+  for (let e of c)
+    i.some((t) => t.account === e.account) ||
+      (i.push({
+        ...e,
+        active: !0,
+        createdAt: new Date().toISOString(),
+        lastLoginAt: ``,
+        online: !1,
+      }),
+      (a = !0));
+  return (a && d(r), r);
+}
+var c = [
+    {
+      id: `t-super`,
+      account: `admin@aufe.edu.cn`,
+      password: `Admin123`,
+      name: `超级管理员`,
+      role: `super_admin`,
+    },
+    {
+      id: `t-zhang`,
+      account: `zhang@aufe.edu.cn`,
+      password: `Test123`,
+      name: `张老师`,
+      role: `advisor`,
+    },
+    {
+      id: `t-liu`,
+      account: `liu@aufe.edu.cn`,
+      password: `Test123`,
+      name: `刘老师`,
+      role: `advisor`,
+    },
+    {
+      id: `t-wang`,
+      account: `wang@aufe.edu.cn`,
+      password: `Test123`,
+      name: `王老师`,
+      role: `advisor`,
+    },
+    {
+      id: `t-chen`,
+      account: `chen@aufe.edu.cn`,
+      password: `Test123`,
+      name: `陈专员`,
+      role: `specialist`,
+    },
+  ],
+  l = [
+    `source`,
+    `campaign`,
+    `country`,
+    `project`,
+    `program`,
+    `education`,
+    `budget`,
+    `entry_year`,
+    `major`,
+    `duration`,
+    `booked`,
+    `booked_at`,
+    `lost_at`,
+  ];
+function u(e) {
+  return Object.fromEntries(l.filter((t) => t in e).map((t) => [t, e[t]]));
+}
+function d(e) {
+  localStorage.setItem(t, JSON.stringify(e));
+}
+async function f(e, t) {
+  let n = s(),
+    r = (e) => (n[e] ||= []);
+  switch (e) {
+    case `loginAdmin`:
+    case `registerAdmin`: {
+      let e = r(`profiles`).find((e) => e.account === t.account);
+      if (e) {
+        if (e.password && e.password !== t.password)
+          throw Error(`账号或密码不正确`);
+        return (
+          (e.online = !0),
+          (e.lastLoginAt = new Date().toISOString()),
+          d(n),
+          {
+            account: e.account,
+            name: e.name,
+            token: `demo`,
+            role: e.role || `advisor`,
+            admin_granted: !!e.admin_granted,
+          }
+        );
+      }
+      return {
+        account: t.account || `admin`,
+        name: t.name || `管理员`,
+        token: `demo`,
+        role: `super_admin`,
+      };
+    }
+    case `logoutAdmin`: {
+      let e = r(`profiles`).find((e) => e.account === t?.account);
+      e && (e.online = !1);
+      break;
+    }
+    case `listAdmins`:
+      return r(`profiles`).map(({ password: e, ...t }) => t);
+    case `createAdvisor`:
+      r(`profiles`).push({
+        id: a(),
+        account: t.account,
+        password: t.password,
+        name: t.name,
+        role: t.role === `specialist` ? `specialist` : `advisor`,
+        active: !0,
+        createdAt: new Date().toISOString(),
+        lastLoginAt: ``,
+        online: !1,
+      });
+      break;
+    case `adminBundle`:
+      return {
+        ...n,
+        school: n._settings?.school || {},
+        system: n._settings?.system || {},
+      };
+    case `adminSaveSetting`:
+      n._settings = { ...(n._settings || {}), [t.key]: t.value };
+      break;
+    case `adminSave`: {
+      let { note: e, author: i, ...o } = t.values || {},
+        s = r(t.table),
+        c = t.id || a(),
+        l = s.findIndex((e) => e.id === c);
+      return (
+        l >= 0
+          ? (s[l] = { ...s[l], ...o })
+          : s.push({ id: c, created_at: new Date().toISOString(), ...o }),
+        t.table === `leads` &&
+          e &&
+          r(`lead_notes`).unshift({
+            id: a(),
+            lead_id: c,
+            author: i || ``,
+            note: e,
+            created_at: new Date().toISOString(),
+          }),
+        d(n),
+        { id: c }
+      );
+    }
+    case `adminRemove`:
+      n[t.table] = r(t.table).filter((e) => e.id !== t.id);
+      break;
+    case `adminAssignLeads`:
+      r(`leads`).forEach((e) => {
+        t.ids.includes(e.id) &&
+          ((e.owner = t.owner), e.status === `待跟进` && (e.status = `跟进中`));
+      });
+      break;
+    case `adminMergeLeads`:
+      (r(`leads`).forEach((e) => {
+        t.dropIds.includes(e.id) && (e.mergedInto = t.keepId);
+      }),
+        r(`lead_notes`).forEach((e) => {
+          t.dropIds.includes(e.lead_id) &&
+            ((e.merged_from = e.lead_id), (e.lead_id = t.keepId));
+        }));
+      break;
+    case `adminUnmergeLeads`:
+      (r(`leads`).forEach((e) => {
+        t.dropIds.includes(e.id) &&
+          e.mergedInto === t.keepId &&
+          delete e.mergedInto;
+      }),
+        r(`lead_notes`).forEach((e) => {
+          t.dropIds.includes(e.merged_from) &&
+            ((e.lead_id = e.merged_from), delete e.merged_from);
+        }));
+      break;
+    case `setAdminGrant`: {
+      let e = r(`profiles`).find((e) => e.account === t.account);
+      if (!e) throw Error(`账号不存在`);
+      if (e.role !== `specialist`) throw Error(`只能给专人设置管理员权限`);
+      e.admin_granted = !!t.grant;
+      break;
+    }
+    case `saveOpenDay`: {
+      let e = a();
+      return (
+        r(`events`).push({ id: e, ...t, created_at: new Date().toISOString() }),
+        d(n),
+        { id: e }
+      );
+    }
+    case `adminKeepUpload`:
+      r(`images`).push({
+        id: a(),
+        url: t.url,
+        created_at: new Date().toISOString(),
+      });
+  }
+  return (d(n), null);
+}
+export { f as demoCloud };
